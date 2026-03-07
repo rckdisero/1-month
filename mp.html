@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title> É isso ai! </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+
+<style>
+:root {
+  --pink: #ff4d8d;
+  --gold: #ffd166;
+  --bg1: #2b0015;
+  --bg2: #0e0207;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+/* PLAYER */
+.player {
+  width: 340px;
+  padding: 26px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 45px rgba(255, 77, 141, 0.35);
+  text-align: center;
+  transition: opacity 1s, transform 1s;
+}
+
+.player.hide {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.cover {
+  width: 190px;
+  height: 190px;
+  margin: auto;
+  border-radius: 50%;
+  background-image: url(assets/picture.png);
+  /*background: linear-gradient(135deg, var(--pink), var(--gold));*/
+  box-shadow: 0 0 35px rgba(255, 209, 102, 0.7);
+  animation: spin 14s linear infinite;
+  animation-play-state: paused;
+}
+
+.playing .cover {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+h2 {
+  margin: 18px 0 4px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #ffe1f0;
+}
+
+.romantic-text {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #fff0f7;
+  min-height: 48px;
+  cursor: pointer;
+  transition: opacity 0.4s;
+}
+
+.controls {
+  margin-top: 14px;
+}
+
+button {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 42px;
+  cursor: pointer;
+}
+
+/* SEEK BAR */
+.seek {
+  margin-top: 14px;
+}
+
+.seek input {
+  width: 100%;
+  accent-color: var(--pink);
+}
+
+/* VOLUME */
+.volume {
+  margin-top: 14px;
+}
+
+.volume input {
+  width: 100%;
+  accent-color: var(--pink);
+}
+
+/* SURPRESA FINAL */
+.surprise {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, #ff7eb3, #12000a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s;
+}
+
+.surprise.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.surprise-box {
+  max-width: 320px;
+  animation: fadeUp 2s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.surprise h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.surprise p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff0f7;
+}
+
+.replay {
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 15px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff4d8d, #ffd166);
+  color: #2b0015;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(255, 77, 141, 0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.replay:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 77, 141, 0.9);
+}
+</style>
+</head>
+
+<body>
+
+<div class="player" id="player">
+  <div class="cover"></div>
+
+  <h2>Para minha Nicoli</h2>
+  <div class="subtitle">❤️❤️❤️❤️</div>
+
+  <div class="romantic-text" id="romanticText">
+    Clique aqui… eu te amo mais do que consigo explicar 💖
+  </div>
+
+  <div class="controls">
+    <button id="playBtn">▶</button>
+  </div>
+
+  <div class="seek">
+    ⏭️ Música
+    <input type="range" id="seekBar" min="0" max="100" value="0">
+  </div>
+
+  <div class="volume">
+    🔊 Volume
+    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.8">
+  </div>
+
+  <audio id="audio">
+    <source src="assets/music.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<div class="surprise" id="surprise">
+  <div class="surprise-box">
+    <h1>💖 Nicoli 💖</h1>
+    <p>
+      Feliz 1 mês, meu amor.<br>  
+      Obrigado por estar comigo,  
+      por me escolher todos os dias  
+      e por fazer minha vida mais colorida.
+      <br><br>
+      Eu te amo imensamente nenem. ✨
+    </p>
+
+    <button class="replay" id="replayBtn">🔁 Ouvir de novo ❤️</button>
+  </div>
+</div>
+
+<script>
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+const player = document.getElementById("player");
+const romanticText = document.getElementById("romanticText");
+const volumeControl = document.getElementById("volumeControl");
+const seekBar = document.getElementById("seekBar");
+const surprise = document.getElementById("surprise");
+
+audio.volume = volumeControl.value;
+
+const messages = [
+  "Nicoli, você é o meu lugar seguro ❤️",
+  "Você é a melhor parte do meu dia",
+  "Você é meu presente favorito 🎁",
+  "Que eu esteja sempre ao seu lado",
+  "Meu coração é seu 💖",
+  "Feliz dia das mulheres, meu amor🌹"
+];
+
+let msgIndex = 0;
+
+/* PLAY */
+playBtn.onclick = () => {
+  if (audio.paused) {
+    audio.play();
+    playBtn.textContent = "⏸";
+    player.classList.add("playing");
+  } else {
+    audio.pause();
+    playBtn.textContent = "▶";
+    player.classList.remove("playing");
+  }
+};
+
+/* UPDATE SEEK */
+audio.ontimeupdate = () => {
+  if (!isNaN(audio.duration)) {
+    seekBar.value = (audio.currentTime / audio.duration) * 100;
+  }
+};
+
+/* SEEK CONTROL */
+seekBar.oninput = () => {
+  if (!isNaN(audio.duration)) {
+    audio.currentTime = (seekBar.value / 100) * audio.duration;
+  }
+};
+
+/* TEXT */
+romanticText.onclick = () => {
+  romanticText.style.opacity = 0;
+  setTimeout(() => {
+    msgIndex = (msgIndex + 1) % messages.length;
+    romanticText.textContent = messages[msgIndex];
+    romanticText.style.opacity = 1;
+  }, 300);
+};
+
+/* VOLUME */
+volumeControl.oninput = () => {
+  audio.volume = volumeControl.value;
+};
+
+/* FINAL SURPRESA */
+audio.onended = () => {
+  player.classList.add("hide");
+  setTimeout(() => {
+    surprise.classList.add("show");
+  }, 1200);
+};
+
+const replayBtn = document.getElementById("replayBtn");
+
+/* FINAL SURPRESA */
+audio.onended = () => {
+  player.classList.add("hide");
+  setTimeout(() => {
+    surprise.classList.add("show");
+  }, 1200);
+};
+
+/* OUVIR DE NOVO */
+replayBtn.onclick = () => {
+  surprise.classList.remove("show");
+
+  setTimeout(() => {
+    player.classList.remove("hide");
+    audio.currentTime = 0;
+    audio.play();
+    playBtn.textContent = "⏸";
+    player.classList.add("playing");
+  }, 800);
+};
+
+</script>
+
+</body>
+</html>
