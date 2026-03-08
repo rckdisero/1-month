@@ -7,12 +7,21 @@
 <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Loved+by+the+King&family=Mochiy+Pop+P+One&display=swap');
+
 :root {
   --pink: #ff4d8d;
   --gold: #ffd166;
   --bg1: #2b0015;
   --bg2: #0e0207;
 }
+
+.loved-by-the-king-regular {
+  font-family: "Loved by the King", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 * {
   box-sizing: border-box;
@@ -49,8 +58,8 @@ body {
 }
 
 .cover {
-  width: 190px;
-  height: 190px;
+  width: 200px;
+  height: 200px;
   margin: auto;
   border-radius: 50%;
   background-image: url(assets/picture.png);
@@ -95,7 +104,7 @@ h2 {
 button {
   background: none;
   border: none;
-  color: var(--gold);
+  color: var(--pink);
   font-size: 42px;
   cursor: pointer;
 }
@@ -140,8 +149,14 @@ button {
 }
 
 .surprise-box {
-  max-width: 320px;
+  max-width: 520px;
   animation: fadeUp 2s ease forwards;
+  background: #2b0015;
+  backdrop-filter: blur(18px);
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  color: #2b0015;
 }
 
 @keyframes fadeUp {
@@ -150,14 +165,17 @@ button {
 }
 
 .surprise h1 {
-  font-size: 28px;
+  font-family: "Loved by the King", cursive;
+  font-size: 42px;
   margin-bottom: 10px;
+  color: white;
 }
 
 .surprise p {
-  font-size: 16px;
+  font-family: "Loved by the King", cursive;
+  font-size: 32px;
   line-height: 1.5;
-  color: #fff0f7;
+  color: white;
 }
 
 .replay {
@@ -187,10 +205,10 @@ button {
   <div class="cover"></div>
 
   <h2>Para minha Nicoli</h2>
-  <div class="subtitle">❤️❤️❤️❤️</div>
+  <div class="subtitle">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</div>
 
   <div class="romantic-text" id="romanticText">
-    Clique aqui… eu te amo mais do que consigo explicar 💖
+    Eu te amo mais do que consigo explicar 💖
   </div>
 
   <div class="controls">
@@ -198,12 +216,12 @@ button {
   </div>
 
   <div class="seek">
-    ⏭️ Música
+     Música
     <input type="range" id="seekBar" min="0" max="100" value="0">
   </div>
 
   <div class="volume">
-    🔊 Volume
+     Volume
     <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.8">
   </div>
 
@@ -214,17 +232,20 @@ button {
 
 <div class="surprise" id="surprise">
   <div class="surprise-box">
-    <h1>💖 Nicoli 💖</h1>
+    <h1>Mi Piaci 💖</h1>
     <p>
-      Feliz 1 mês, meu amor.<br>  
+      Feliz 1 mês, minha gostosa.<br>  
       Obrigado por estar comigo,  
       por me escolher todos os dias  
       e por fazer minha vida mais colorida.
       <br><br>
+      A cada dia que passa tenho mais certeza
+      de que você é a mulher da minha vida.
+      <br><br>
       Eu te amo imensamente nenem. ✨
     </p>
 
-    <button class="replay" id="replayBtn">🔁 Ouvir de novo ❤️</button>
+    <button class="replay" id="replayBtn"> Ouvir de novo </button>
   </div>
 </div>
 
@@ -241,10 +262,10 @@ audio.volume = volumeControl.value;
 
 const messages = [
   "Nicoli, você é o meu lugar seguro ❤️",
-  "Você é a melhor parte do meu dia",
-  "Você é meu presente favorito 🎁",
-  "Que eu esteja sempre ao seu lado",
-  "Meu coração é seu 💖",
+  "Você é a melhor parte do meu dia.",
+  "Você é meu presente favorito.",
+  "Que eu esteja sempre ao seu lado.",
+  "Meu coração é seu!",
   "Feliz dia das mulheres, meu amor🌹"
 ];
 
